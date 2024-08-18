@@ -62,7 +62,7 @@ export default function JobSearchFeed() {
             <div className="max-w-7xl w-full flex justify-center">
               <div className="flex flex-col items-center">
                 <h1 className="text-3xl text-white-100">
-                  We couldn't find any job that match your search
+                  We couldn&apos;t find any job that match your search
                 </h1>
                 <p className="text-center text-gray-400 text-base mt-2 mb-6">
                   Try a new search or go back to home page.

@@ -47,7 +47,7 @@ export default async function Dashboard() {
 
         <div>
           {postedJobs.length == 0 ? (
-            <p className="text-gray-400">You don't have any active job.</p>
+            <p className="text-gray-400">You don&apos;t have any active job.</p>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {postedJobs.map((job:jobdataType) => (

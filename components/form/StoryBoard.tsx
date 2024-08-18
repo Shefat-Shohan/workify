@@ -15,7 +15,7 @@ export default function StoryBoard() {
               Tell us about your job offer
             </h1>
             <p className="text-[16px] font-normal max-w-[500px] text-gray-400">
-              In this step, we'll ask you about the job type, job name, a brief
+              In this step, we&apos;ll ask you about the job type, job name, a brief
               job description, and information about your company. This will
               help us understand your needs and assist you more effectively.
             </p>
