@@ -1,10 +1,8 @@
 "use client";
 import JobListing from "@/components/JobListing";
-import MagicButton from "@/components/ui/MagicButton";
 import useFetch from "@/components/service/useFetch";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { FaLocationArrow } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 
 export default function JobSearchFeed() {
