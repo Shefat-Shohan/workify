@@ -4,9 +4,10 @@ import useFetch from "@/components/service/useFetch";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { string } from "three/examples/jsm/nodes/Nodes.js";
 
 export default function JobSearchFeed() {
-  const { searchTerm } = useParams<{ searchTerm: string }>();
+  const { searchTerm } = useParams<{ searchTerm: string}>();
   const decodedUriTerm = decodeURIComponent(searchTerm);
 
   const {

@@ -5,8 +5,10 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
 export default function SearchBar({ setResults }) {
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>('');
   const router = useRouter();
+
+  console.log(searchTerm);
 
   // get the searchterm filter the data the set the setResult value
 
