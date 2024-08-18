@@ -68,9 +68,9 @@ const CandidateActivity:React.FC<CandidateActivityProps> = ({currentuserId}) => 
                       (appliedJobs:jobdataType) => appliedJobs.id == application.jobId
                     )
                   ).filter(job => job !== undefined)
-                  .map((job, index) => (
+                  .map((job:jobdataType, index) => (
                     <div key={index}>
-                      <JobListing job={job} />
+                      <JobListing job ={job} />
                     </div>
                   ))}
               </TabsContent>
