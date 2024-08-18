@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
 export default function SearchBar({ setResults }) {
-  const [searchTerm, setSearchTerm] = useState<string | string[]>('');
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const router = useRouter();
 
   // get the searchterm filter the data the set the setResult value
@@ -42,15 +42,14 @@ export default function SearchBar({ setResults }) {
   };
   return (
     <div className=" bg-[#04071d] w-full h-full rounded-full px-4 border border-gray-50/15 flex justify-center ">
-      <form
-        className="flex items-center w-full h-12 "
-        onSubmit={handleSubmit}
-      >
+      <form className="flex items-center w-full h-12 " onSubmit={handleSubmit}>
         <button type="submit">
           <MagnifyingGlassIcon className="w-5 h-5 text-[#f1f7feb5]" />
         </button>
         <input
-          className={cn("bg-transparent w-full ml-4 border-none outline-none text-gray-500 text-[16px] font-medium placeholder-gray-500")} 
+          className={cn(
+            "bg-transparent w-full ml-4 border-none outline-none text-gray-500 text-[16px] font-medium placeholder-gray-500"
+          )}
           type="text"
           placeholder="Search for any job..."
           value={searchTerm}

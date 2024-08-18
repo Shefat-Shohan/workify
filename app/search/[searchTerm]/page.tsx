@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
 export default function JobSearchFeed() {
-  const { searchTerm } = useParams();
+  const { searchTerm } = useParams<{ searchTerm: string }>();
   const decodedUriTerm = decodeURIComponent(searchTerm);
 
   const {
