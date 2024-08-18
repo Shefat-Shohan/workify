@@ -4,19 +4,20 @@ import useFetch from "@/components/service/useFetch";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { jobdataType } from "@/components/JobListings";
 
 export default function JobSearchFeed() {
   const { searchTerm } = useParams<{searchTerm: string}>();
   const decodedUriTerm = decodeURIComponent(Array.isArray(searchTerm) ? searchTerm.join('') : searchTerm);
   console.log(searchTerm);
   const {
-    data: userData,
+    data: jobList,
     isPending,
     error,
   } = useFetch("https://66afff066a693a95b537a511.mockapi.io/jobs");
 
-  const filteredResult = (userData) => {
-    let result = userData.filter((filteredJob) =>
+  const filteredResult = (jobList:jobdataType[]) => {
+    let result = jobList.filter((filteredJob:jobdataType) =>
       filteredJob.title
         .toLowerCase()
         .includes(decodedUriTerm.trim().toLowerCase())
@@ -24,7 +25,7 @@ export default function JobSearchFeed() {
     return result;
   };
 
-  const searchResult = filteredResult(userData);
+  const searchResult = filteredResult(jobList);
   return (
     <>
       {isPending && (
