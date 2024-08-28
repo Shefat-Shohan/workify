@@ -138,7 +138,8 @@ export const testimonials = [
   {
     quote:
       "I appreciated the variety of job postings available on this platform. It felt like there were new opportunities every day, which kept me motivated throughout my job search. The application tracking feature is a game-changer, allowing me to keep tabs on all my applications in one place. I also found the resume builder tool extremely helpful in updating my CV to industry standards. Thanks to this app, I managed to secure a position that perfectly aligns with my career goals. Excellent resource for job seekers!",
-    title: "Marketing Manager",
+      name: "Davis Miller",
+      title: "Marketing Manager",
   },
   {
     quote:
