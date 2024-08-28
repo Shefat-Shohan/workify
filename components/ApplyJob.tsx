@@ -10,29 +10,30 @@ import { useRouter } from "next/navigation";
 import { FC, FormEvent, useState } from "react";
 import { jobdataType } from "./JobListings";
 
-const ApplyJob = ({ id }:{id:string | number}) => {
+const ApplyJob = ({ id }: { id: string | number }) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [applyData, setApplyData] = useState({
     salary: "",
     coverLetter: "",
   });
-  const {user} =useUser ();
+  const { user } = useUser();
   const router = useRouter();
   const { data, isPending } = useFetch(
     "https://66afff066a693a95b537a511.mockapi.io/jobs/" + id
   );
-const jobList = data as jobdataType[];
-
-console.log("job to apply",jobList)
+  const jobList = data as jobdataType;
   let description = jobList.description;
+
+
+  console.log(typeof description);
 
   if (!showFullDescription) {
     description = description?.substring(0, 150) + "...";
   }
 
-// handle apply job
+  // handle apply job
 
-  const handleApplyJob = async (e:FormEvent) => {
+  const handleApplyJob = async (e: FormEvent) => {
     e.preventDefault();
     const profileInfo = await fetchUserProfileInfo(user?.id);
     const candidateProfileDetails = profileInfo?.find((profile) => {
@@ -43,7 +44,6 @@ console.log("job to apply",jobList)
       "https://66afff066a693a95b537a511.mockapi.io/jobs/" + id
     );
     const currentJobDetails = await res.json();
-
 
     // get all the application data
     const getApplicantInfo = {
@@ -58,8 +58,6 @@ console.log("job to apply",jobList)
       jobApplicationDate: new Date().toLocaleDateString(),
     };
 
-console.log(getApplicantInfo);
-
     // push the data to database
     await fetch("https://66afff066a693a95b537a511.mockapi.io/application", {
       method: "POST",
@@ -69,7 +67,7 @@ console.log(getApplicantInfo);
     toast({
       title: "Job applied Successfully",
       description: "Check activitty to exprole.",
-    })
+    });
     router.push("/activity");
   };
 
@@ -134,20 +132,33 @@ console.log(getApplicantInfo);
                     className="bg-black-200 h-12 mb-6 text-base text-gray-400 placeholder:text-base placeholder:text-gray-400 ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                     placeholder="What is your expected salary"
                     value={applyData.salary}
-                    onChange={(e)=> setApplyData({
-                      ...applyData, salary: e.target.value
-                    })}
+                    onChange={(e) =>
+                      setApplyData({
+                        ...applyData,
+                        salary: e.target.value,
+                      })
+                    }
                   />
                   <Textarea
                     className="bg-black-200 placeholder:text-gray-400 min-h-[250px] text-base text-gray-400 placeholder:text-base ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 mb-6"
                     placeholder="Cover letter"
                     required
-                    onChange={(e)=>setApplyData({...applyData, coverLetter: e.target.value})}
+                    onChange={(e) =>
+                      setApplyData({
+                        ...applyData,
+                        coverLetter: e.target.value,
+                      })
+                    }
                     value={applyData.coverLetter}
                   />
-                  <Button 
-                  disabled={!applyData.salary || !applyData.coverLetter}
-                  onSubmit={handleApplyJob} variant="outline" className="px-6 py-4 text-gray-400 bg-black-200 disabled:opacity-65">Submit</Button>
+                  <Button
+                    disabled={!applyData.salary || !applyData.coverLetter}
+                    onSubmit={handleApplyJob}
+                    variant="outline"
+                    className="px-6 py-4 text-gray-400 bg-black-200 disabled:opacity-65"
+                  >
+                    Submit
+                  </Button>
                 </form>
               </div>
             </div>

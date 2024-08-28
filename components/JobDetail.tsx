@@ -151,8 +151,6 @@ export default function JobDetail({ job }: { job: jobdataType }) {
     data.filter((job: jobdataType) => {
       return job.id === currentJobId && job.recruiterId === user?.id;
     }).length > 0;
-
-  console.log("showActionButton", showActionButton);
   return (
     <div className="relative flex justify-center items-center flex-col overflow-hidden mx-auto sm:px-10 px-5 mt-40 mb-20">
       <div className="max-w-7xl w-full">
