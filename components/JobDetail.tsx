@@ -88,7 +88,7 @@ export default function JobDetail({ job }: { job: jobdataType }) {
 
           // Find and delete applications related to the deleted job
           const applicationsToDelete = applications.filter(
-            (item) => item.jobId === deleteId
+            (item:Applicant) => item.jobId === deleteId
           );
 
           for (const app of applicationsToDelete) {
@@ -114,7 +114,6 @@ export default function JobDetail({ job }: { job: jobdataType }) {
       } catch (error) {
         toast({
           title: "An error occurred while deleting the job",
-          status: "error",
         });
         console.error("Error:", error);
       }
