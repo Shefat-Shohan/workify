@@ -26,7 +26,7 @@ export default function JobListing({
                 </div>
                 <div className="text-gray-400 flex items-center">
                   <MapPinIcon className="w-5 h-5 text-gray-400  mr-1" />
-                  {job.location}
+                  {job?.location}
                 </div>
               </div>
               <div className="pb-4">
