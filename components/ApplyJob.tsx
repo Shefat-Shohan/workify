@@ -21,7 +21,7 @@ const ApplyJob = ({ id }: { id: string | number }) => {
   const { data, isPending } = useFetch(
     "https://66afff066a693a95b537a511.mockapi.io/jobs/" + id
   );
-  const jobList = data as jobdataType;
+  const jobList = data as unknown as jobdataType;
   let description = jobList.description;
 
 
