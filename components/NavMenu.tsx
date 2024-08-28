@@ -6,6 +6,7 @@ import { Bars3BottomRightIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { UserButton, useUser } from "@clerk/nextjs";
+import Image from "next/image";
 
 export default function NavMenu({ profileInfo }) {
   const { user } = useUser();
@@ -69,7 +70,7 @@ export default function NavMenu({ profileInfo }) {
                   className="font-bold md:text-2xl text-lg text-white-100"
                   href={"/"}
                 >
-                  WORKIFY
+                 <Image width={160} height={80} src='/logo.svg' alt="logo"/>
                 </Link>
                 <div
                   onClick={() => setIsOpen(!isOpen)}
@@ -98,13 +99,15 @@ export default function NavMenu({ profileInfo }) {
                       <Link
                         key={index}
                         href={item.url}
-                        className="md:mr-6 text-gray-400 hover:text-purple flex flex-col mb-6 md:mb-0"
+                        className={` md:ml-6 text-gray-400 hover:text-purple flex flex-col mb-6 md:mb-0`}
                       >
                         {item.title}
                       </Link>
                     ) : null
                   )}
+                  <span className={`${user ? "pl-6" : "pl-0"}`}>
                   <UserButton afterSwitchSessionUrl="/" />
+                  </span>
                 </nav>
               </div> 
             </div>

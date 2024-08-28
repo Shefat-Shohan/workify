@@ -1,5 +1,6 @@
 "use client";
 import JobListing from "./JobListing";
+import LoadingSkeleton from "./LoadingSkeleton";
 import useFetch from "./service/useFetch";
 
 export type jobdataType = {
@@ -11,6 +12,13 @@ export type jobdataType = {
   salary: number;
   id: string | number;
   recruiterId:string;
+  applicants:string[];
+  company: {
+    name:string;
+    description:string;
+    contactEmail:string;
+    contactPhone:string;
+  }
 };
 export default function JobListings() {
   const {
@@ -28,7 +36,7 @@ export default function JobListings() {
         </h2>
         {error && <div>{error}</div>}
         {isPending ? (
-          <h1 className="flex justify-center items-center">Loading...</h1>
+          <LoadingSkeleton />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {jobs.map((job:jobdataType) => (

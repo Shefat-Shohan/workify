@@ -2,51 +2,43 @@
 import { MapPinIcon, ShareIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import JobListing from "./JobListing";
-import ApplyJob from "./ApplyJob";
 import fetchUserProfileInfo from "./service/fetchProfileInfo";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "./ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import useFetch from "./service/useFetch";
 import DeleteJob from "./DeleteJob";
 import RecruiterJobList from "./RecruiterJobList";
-import { useToast } from "@/components/ui/use-toast"
+import { useToast } from "@/components/ui/use-toast";
+import ApplyJobButton from "./ApplyJobButton";
+import { Applicant } from "./CandidateActivity";
+import { jobdataType } from "./JobListings";
 
-interface Job {
-  type: string;
-  location: string;
-  description: string;
-  title: string;
-  salary: string;
-  id: string | number;
-  company: {
-    name: string;
-    description: string;
-    contactEmail: string;
-    contactPhone: string;
-  };
-}
-
-export default function JobDetail({ job }: { job: Job }) {
+type UserType = {
+  userId: string;
+  role: string;
+};
+export default function JobDetail({ job }: { job: jobdataType }) {
   const pathName = usePathname();
+  const [isLoading, setIsLoading] = useState(true);
+  const [isRecruiter, setIsRecruiter] = useState(false);
   const { user } = useUser();
-  const {toast} = useToast();
+  const { toast } = useToast();
   const recruiterUserId = user?.id;
   // share url
-  const [copySuccess, setCopySuccess] = useState<string | null>(null);
   const router = useRouter();
-
   const handleJobShare = () => {
     const url = `http://localhost:3000${pathName}`;
     navigator.clipboard
       .writeText(url)
       .then(() => {
-        setCopySuccess("copied");
+        toast({
+          title: "Job link copied.",
+        });
       })
       .catch((err) => {
         console.error("Failed to copy: ", err);
-        setCopySuccess("Failed to copy link.");
       });
   };
 
@@ -55,7 +47,7 @@ export default function JobDetail({ job }: { job: Job }) {
   const recentJobList = data.slice(0, 3);
   const currentJobId = job.id;
   const jobs = recentJobList
-    ? recentJobList.filter((job) => job.id !== currentJobId)
+    ? recentJobList.filter((job: jobdataType) => job.id !== currentJobId)
     : [];
 
   // fetch application database
@@ -67,98 +59,73 @@ export default function JobDetail({ job }: { job: Job }) {
     "https://66bf797c42533c4031464979.mockapi.io/workify/users"
   );
 
-  // handle the job apply functionality
-  const handleApply = async (loggedInUserId) => {
-    if (!user) {
-      router.push("/sign-up");
-    } else {
-      const profileInfo = await fetchUserProfileInfo(loggedInUserId);
-      const candidateProfileDetails = profileInfo?.find((profile) => {
-        return profile.email;
-      });
-
-      const res = await fetch(
-        "https://66afff066a693a95b537a511.mockapi.io/jobs/" + currentJobId
-      );
-      const currentJobDetails = await res.json();
-
-      // get all the application data
-      const getApplicantInfo = {
-        recruiterId: currentJobDetails.recruiterId,
-        name: candidateProfileDetails.candidateInfo.name,
-        email: candidateProfileDetails.email,
-        candidateUserId: candidateProfileDetails.userId,
-        coverLetter: candidateProfileDetails.coverLetter,
-        status: ["Applied"],
-        jobId: currentJobId,
-        jobApplicationDate: new Date().toLocaleDateString(),
-      };
-      // push the data to database
-      await fetch("https://66afff066a693a95b537a511.mockapi.io/application", {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify(getApplicantInfo),
-      });
-      toast({
-        title: "Job applied Successfully",
-        description: "Check activitty to exprole.",
-      })
-      router.back();
-    }
-  };
 
   // handle delete function
-
   const handleDelete = async (deleteId: string) => {
-    try {
-      // Delete the job first
-      const jobRes = await fetch(
-        `https://66afff066a693a95b537a511.mockapi.io/jobs/${deleteId}`,
-        {
-          method: "DELETE",
-        }
-      );
-      toast({
-        title: "Job deleted Successfully",
-      })
-      router.back();
-      if (!jobRes.ok) {
-        throw new Error("Failed to delete job");
-      }
-      // Fetch all applications
-      const applicantRes = await fetch(
-        `https://66afff066a693a95b537a511.mockapi.io/application`
-      );
-      const applications = await applicantRes.json();
-
-      // Find applications related to the deleted job
-      const applicationsToDelete = applications.filter(
-        (item) => item.jobId === deleteId
-      );
-
-      // Delete each related application
-      for (const app of applicationsToDelete) {
-        const applicationRes = await fetch(
-          `https://66afff066a693a95b537a511.mockapi.io/application/${app.id}`,
+    const isConfirm = window.confirm(
+      "Are you sure you want to delete this job?"
+    );
+    if (isConfirm) {
+      try {
+        // Delete the job first
+        const jobRes = await fetch(
+          `https://66afff066a693a95b537a511.mockapi.io/jobs/${deleteId}`,
           {
             method: "DELETE",
           }
         );
 
-        if (!applicationRes.ok) {
-          console.log(`Network error`);
+        if (jobRes.ok) {
+          toast({
+            title: "Job deleted successfully",
+          });
+
+          // Fetch all applications related to the job
+          const applicantRes = await fetch(
+            `https://66afff066a693a95b537a511.mockapi.io/application`
+          );
+          const applications = await applicantRes.json();
+
+          // Find and delete applications related to the deleted job
+          const applicationsToDelete = applications.filter(
+            (item) => item.jobId === deleteId
+          );
+
+          for (const app of applicationsToDelete) {
+            const applicationRes = await fetch(
+              `https://66afff066a693a95b537a511.mockapi.io/application/${app.id}`,
+              {
+                method: "DELETE",
+              }
+            );
+
+            if (!applicationRes.ok) {
+              console.log(`Failed to delete application with id ${app.id}`);
+            } else {
+              console.log(`Deleted application with id ${app.id}`);
+            }
+          }
+
+          // Navigate back after everything is successfully deleted
+          router.back();
         } else {
-          console.log(`success`);
+          throw new Error("Failed to delete job");
         }
+      } catch (error) {
+        toast({
+          title: "An error occurred while deleting the job",
+          status: "error",
+        });
+        console.error("Error:", error);
       }
-    } catch (error) {
-      console.error("Error:", error);
+    } else {
+      console.log("Job deletion canceled");
     }
   };
 
   // check if the currentUser already applied for the job
   const isApplied =
-    JobApplications.findIndex((applicant) => {
+    JobApplications.findIndex((applicant: Applicant) => {
       return (
         applicant.jobId == currentJobId && applicant.candidateUserId == user?.id
       );
@@ -166,13 +133,26 @@ export default function JobDetail({ job }: { job: Job }) {
       ? true
       : false;
   // is current user is recruiter
-  const isRecruiter =
-    users.findIndex(
-      (user) => user.userId === recruiterUserId && user.role === "recruiter"
-    ) > -1
-      ? true
-      : false;
 
+  useEffect(() => {
+    const recruiter =
+      users.findIndex(
+        (user: UserType) =>
+          user.userId === recruiterUserId && user.role === "recruiter"
+      ) > -1
+        ? true
+        : false;
+    setIsRecruiter(recruiter);
+    setIsLoading(false);
+  }, [users, recruiterUserId]);
+  // if currentUser included into the currentJob id then we show the delete button else empty div, else a apply button.
+
+  const showActionButton =
+    data.filter((job: jobdataType) => {
+      return job.id === currentJobId && job.recruiterId === user?.id;
+    }).length > 0;
+
+  console.log("showActionButton", showActionButton);
   return (
     <div className="relative flex justify-center items-center flex-col overflow-hidden mx-auto sm:px-10 px-5 mt-40 mb-20">
       <div className="max-w-7xl w-full">
@@ -185,13 +165,16 @@ export default function JobDetail({ job }: { job: Job }) {
                 {job.title}
               </h1>
               <div className="flex items-center justify-center gap-3 mt-3 md:mt-0">
-                {isRecruiter ? (
-                  <DeleteJob handleDelete={() => handleDelete(job?.id)} />
+                {showActionButton ? (
+                  <DeleteJob handleDelete={() => handleDelete(job?.id as string)} />
+                ) : isRecruiter ? (
+                  <div></div>
                 ) : (
-                  <ApplyJob
-                    disabled={isApplied}
-                    handleApply={() => handleApply(user?.id)}
-                  />
+                  <Link href={`/jobs/${job.id}/apply`}>
+                    <ApplyJobButton
+                      disabled={isApplied}
+                    />
+                  </Link>
                 )}
                 <Link href="#">
                   <Button className="px-4 py-6 bg-background border hover:bg-black-200">
@@ -218,7 +201,7 @@ export default function JobDetail({ job }: { job: Job }) {
             </div>
             {/* job details */}
             <div className="my-16">
-              <p className="text-lg text-gray-400  leading font-normal">
+              <p className="text-base text-gray-400  leading">
                 {job.description}
               </p>
             </div>
@@ -262,17 +245,27 @@ export default function JobDetail({ job }: { job: Job }) {
               </div>
             </div>
           </div>
-
           {/* right side content */}
           <div className="lg:pl-8 pl-0 col-span-4 lg:col-span-1">
-            <h2 className="text-2xl font-normal mb-8 text-white-100"> {isRecruiter ? "Posted by you" :"Recent jobs"} </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6 ">
-              {
-              isRecruiter ? <RecruiterJobList currentJobId={currentJobId}/> : jobs.map((job) => (
-                <JobListing key={job.id} job={job} />
-              ))
-              
-              }
+            <h2 className="text-2xl font-normal mb-8 text-white-100">
+              {isLoading ? (
+                <div>Loading...</div>
+              ) : isRecruiter ? (
+                "Posted by you"
+              ) : (
+                "Recent jobs"
+              )}
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6 ">
+              {isLoading ? (
+                <div>Loading...</div>
+              ) : isRecruiter ? (
+                <RecruiterJobList currentJobId={currentJobId} />
+              ) : (
+                jobs.map((job: jobdataType) => (
+                  <JobListing key={job.id} job={job} />
+                ))
+              )}
             </div>
           </div>
         </div>

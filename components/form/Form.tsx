@@ -37,7 +37,7 @@ interface FormData {
   }
 }
 
-export default function Form({userId}) {
+export default function Form({userId}:{userId: string | undefined}) {
   const [step, setStep] = useState(0);
   const router = useRouter();
   const {toast} = useToast();
@@ -77,12 +77,13 @@ export default function Form({userId}) {
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(newJobs),
     });
+    router.refresh();
+    router.push("/dashboard");
     toast({
       title: "Job Posted Successfully",
       description: "Check dashboard to exprole.",
     })
-    router.refresh();
-    router.push("/dashboard");
+
   };
 
   const displaySteps = () => {

@@ -17,11 +17,12 @@ export default function RecruiterJobList({
   const jobPostedByRecruiter = jobList.filter(
     (currentUserJob: jobdataType) =>
       currentUserJob &&
-      currentUserJob.recruiterId === loggedInId 
+      currentUserJob.recruiterId === loggedInId && currentUserJob.id !== currentJobId
   )
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6">
-      {jobPostedByRecruiter.map((job) => (
+      {jobPostedByRecruiter.map((job:jobdataType) => (
         <JobListing key={job.id} job={job} />
       ))}
     </div>

@@ -6,6 +6,7 @@ import JobListing from "./JobListing";
 import fetchUserProfileInfo from "./service/fetchProfileInfo";
 import { redirect } from "next/navigation";
 import { jobdataType } from "./JobListings";
+import RecruiterDashboard from "./RecruiterDashboard";
 export default async function Dashboard() {
   
   const user = await currentUser();
@@ -14,7 +15,8 @@ export default async function Dashboard() {
   if(profileInfo?.length == 0) redirect("/onboard");
    const recruiterUser = profileInfo?.find(user => user.role === "recruiter");
   if (!recruiterUser) redirect("/");
-   
+  
+   // get all the available jobs
   const getJobs = async () => {
     const res = await fetch(
       "https://66afff066a693a95b537a511.mockapi.io/jobs"
@@ -49,10 +51,8 @@ export default async function Dashboard() {
           {postedJobs.length == 0 ? (
             <p className="text-gray-400">You don&apos;t have any active job.</p>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {postedJobs.map((job:jobdataType) => (
-                <JobListing key={job.id} job={job} recruiterUser={recruiterUser} />
-              ))}
+            <div>
+             <RecruiterDashboard postedJobs={postedJobs} recruiterUser={recruiterUser}/>
             </div>
           )}
         </div>

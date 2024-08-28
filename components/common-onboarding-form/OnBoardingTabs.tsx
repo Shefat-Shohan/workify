@@ -13,7 +13,7 @@ import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 
 
-export default function OnBoardingTabs({ userName }) {
+export default function OnBoardingTabs() {
   const [currentTab, setCurrentTab] = useState("candidate");
   const [recruiterFormData, setRecruiterFormData] = useState(
     initialRecruiterFormData
@@ -24,7 +24,6 @@ export default function OnBoardingTabs({ userName }) {
   const router = useRouter();
   const currentAuthUser = useUser();
   const { user } = currentAuthUser;
-
   // get a track of which tab user in
   const handleTabChange = (value) => {
     setCurrentTab(value);
@@ -100,8 +99,7 @@ export default function OnBoardingTabs({ userName }) {
         <div className="w-full border-b pb-10 mb-10">
           <div className="flex flex-col md:flex-row md:items-center items-start gap-2 md:gap-0 justify-between">
             <h1 className="text-xl text-white-100">
-              Welcome onboarding,&nbsp;
-              <span className="font-semibold text-purple">{userName}</span>
+              Welcome onboarding
             </h1>
             <TabsList>
               <TabsTrigger

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { jobdataType } from "@/components/JobListings";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
 
 export default function JobSearchFeed() {
   const { searchTerm } = useParams<{searchTerm: string}>();
@@ -30,7 +31,9 @@ export default function JobSearchFeed() {
     <>
       {isPending && (
         <div className="relative flex justify-center items-center flex-col overflow-hidden mx-auto sm:px-10 px-5 mt-40 mb-20">
-          <div className="max-w-7xl w-full">Loading...</div>
+          <div className="max-w-7xl w-full">
+            <LoadingSkeleton />
+          </div>
         </div>
       )}
       {searchResult.length > 0 ? (

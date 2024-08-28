@@ -32,7 +32,7 @@ export default function JobListing({
                   {job.location}
                 </div>
               </div>
-              <div className=" pb-4">
+              <div className="pb-4">
                 <h3 className="font-normal text-lg lg:text-xl max-w-96 mb-3 text-white-100">
                   {job.title}
                 </h3>
@@ -40,13 +40,8 @@ export default function JobListing({
               </div>
               <div className="flex justify-between items-center my-4">
                 <div>
-                  {recruiterUser ? (
-                    <CurrentApplicantButton jobId={job.id} />
-                  ) : (
-                    <h3 className="text-purple">{job.salary} / Year</h3>
-                  )}
+                <h3 className="text-purple">{job.salary} / Year</h3>
                 </div>
-
                 <Link
                   className="flex justify-center items-center gap-1 text-gray-400 "
                   href={`/jobs/${job.id}`}

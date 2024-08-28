@@ -23,6 +23,7 @@ export const JobApplicantsProvider = ({ children }: { children: ReactNode }) => 
 
   return (
     <JobApplicantsContext.Provider
+
       value={{
         showApplicantDrawer,
         setShowApplicantDrawer,
@@ -32,7 +33,7 @@ export const JobApplicantsProvider = ({ children }: { children: ReactNode }) => 
         setShowCurrentCandidateDetailsModal,
         jobApplicants,
       }}
-    >
+      >
       {children}
     </JobApplicantsContext.Provider>
   );

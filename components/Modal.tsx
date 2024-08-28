@@ -1,29 +1,26 @@
 "use client";
-
-import { type ElementRef, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { createPortal } from "react-dom";
-import { XMarkIcon } from "@heroicons/react/24/solid";
-import { motion } from "framer-motion";
 import { Drawer, DrawerContent } from "./ui/drawer";
 import { ScrollArea } from "./ui/scroll-area";
 
 export function Modal({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const dialogRef = useRef<ElementRef<"dialog">>(null);
-
-  useEffect(() => {
-    if (!dialogRef.current?.open) {
-      dialogRef.current?.showModal();
-    }
-  }, []);
-
   function onDismiss() {
     router.back();
   }
-  return createPortal(
-    <div className="fixed inset-0 z-50">
-      <div className="modal">
+  return (
+    <Drawer open={true} onClose={onDismiss}>
+      <DrawerContent className="h-[90%]">
+        <ScrollArea>
+          {children}
+        </ScrollArea>
+      </DrawerContent>
+    </Drawer>
+  );
+}
+
+{
+  /* <div className="modal">
         <motion.dialog
           className="modal_wrapper"
           ref={dialogRef}
@@ -41,8 +38,5 @@ export function Modal({ children }: { children: React.ReactNode }) {
             <XMarkIcon className="w-6 h-6" />
           </span>
         </motion.dialog>
-      </div>
-    </div>,
-    document.getElementById("modal-root")!
-  );
+      </div> */
 }

@@ -7,7 +7,6 @@ import React from "react";
 
 export default async function Onboard() {
   const user = await currentUser();
-  const name= user?.firstName;
   const profileInfo = await fetchuserProfileInfo(
    user?.id
   );
@@ -18,7 +17,7 @@ export default async function Onboard() {
   return (
     <div className="relative flex justify-center items-center flex-col overflow-hidden mx-auto sm:px-10 px-5 mt-40 mb-20">
       <div className="max-w-7xl w-full">
-        <OnBoardingTabs userName={name} />
+        <OnBoardingTabs />
       </div>
     </div>
   );
