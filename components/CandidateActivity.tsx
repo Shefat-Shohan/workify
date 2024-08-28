@@ -82,8 +82,8 @@ const CandidateActivity: React.FC<CandidateActivityProps> = ({
                         )
                       )
                       .filter((job) => job !== undefined)
-                      .map((job:jobdataType) => (
-                        <div key={job.id}>
+                      .map((job:jobdataType | undefined) => (
+                        <div key={job?.id}>
                           <JobListing job={job} />
                         </div>
                       ))}
