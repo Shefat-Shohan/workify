@@ -1,11 +1,40 @@
-import { div } from "three/examples/jsm/nodes/Nodes.js";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 
-export default function OnboardingForm({
-  action,
+interface FormControl {
+  label: string;
+  name: string;
+  placeholder: string;
+  componentType: string;
+  disabled?:boolean;
+}
+interface FormDataType1 {
+  name: string;
+  currentCompanyName: string;
+  currentCompanyRole: string;
+  yearsOfExperience: string;
+  skills: string;
+  coverLetter: string;
+}
+
+interface FormDataType2 {
+  name: string;
+  companyName: string;
+  companyRole: string;
+}
+
+interface OnboardingProps<T> {
+  formControls: FormControl[];
+  formData: T;
+  buttonText: string;
+  btnType: 'submit' | 'button' | 'reset';
+  isBtnDisabled: boolean;
+  setFormData: React.Dispatch<React.SetStateAction<T>>; 
+  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+}
+
+const OnboardingForm =<T extends FormDataType1 | FormDataType2> ({
   buttonText,
   btnType,
   formControls,
@@ -13,8 +42,8 @@ export default function OnboardingForm({
   formData,
   setFormData,
   onSubmit,
-}) {
-  const renderInputByType = (getCurrentControl) => {
+}:OnboardingProps<T>) => {
+  const renderInputByType = (getCurrentControl:FormControl) => {
     let content = null;
     switch (getCurrentControl.componentType) {
       case "input":
@@ -26,7 +55,7 @@ export default function OnboardingForm({
               placeholder={getCurrentControl.placeholder}
               name={getCurrentControl.name}
               id={getCurrentControl.name}
-              value={formData[getCurrentControl.name]}
+              value={(formData as any)[getCurrentControl.name]}
               onChange={(event) => {
                 setFormData({
                   ...formData,
@@ -46,7 +75,7 @@ export default function OnboardingForm({
               placeholder={getCurrentControl.placeholder}
               name={getCurrentControl.name}
               id={getCurrentControl.name}
-              value={formData[getCurrentControl.name]}
+              value={(formData as any)[getCurrentControl.name]}
               onChange={(event) => {
                 setFormData({
                   ...formData,
@@ -68,7 +97,7 @@ export default function OnboardingForm({
               placeholder={getCurrentControl.placeholder}
               name={getCurrentControl.name}
               id={getCurrentControl.name}
-              value={formData[getCurrentControl.name]}
+              value={(formData as any)[getCurrentControl.name]}
               onChange={(event) => {
                 setFormData({
                   ...formData,
@@ -84,7 +113,7 @@ export default function OnboardingForm({
     return content;
   };
   return (
-    <form action={action} onSubmit={onSubmit}>
+    <form onSubmit={onSubmit}>
       {formControls.map((control) => renderInputByType(control))}
       <div>
         <Button
@@ -97,4 +126,5 @@ export default function OnboardingForm({
       </div>
     </form>
   );
-}
+};
+export default OnboardingForm;
