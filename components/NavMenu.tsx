@@ -9,7 +9,7 @@ import { UserButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import { UserDataType } from "./service/fetchProfileInfo";
 
-export default function NavMenu({ profileInfo }: {profileInfo:UserDataType}) {
+export default function NavMenu({ profileInfo }: {profileInfo:UserDataType[] | undefined}) {
   const { user } = useUser();
   // have to import this nav letter
   const navigation = [
