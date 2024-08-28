@@ -7,8 +7,9 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { UserButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
+import { UserDataType } from "./service/fetchProfileInfo";
 
-export default function NavMenu({ profileInfo }) {
+export default function NavMenu({ profileInfo }: {profileInfo:UserDataType}) {
   const { user } = useUser();
   // have to import this nav letter
   const navigation = [
@@ -39,7 +40,6 @@ export default function NavMenu({ profileInfo }) {
       show: profileInfo?.[0]?.role === "recruiter"
     },
   ];
-
   const [isOpen, setIsOpen] = useState(false);
   // const useNoScroll = (isOpen) => {
   //   useEffect(() => {

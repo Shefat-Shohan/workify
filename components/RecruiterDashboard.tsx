@@ -9,12 +9,15 @@ import { DataTable } from "../app/dashboard/Data-Table";
 import { columns } from "@/app/dashboard/columns";
 import { BriefcaseIcon,EnvelopeIcon, UserPlusIcon, UserMinusIcon } from "@heroicons/react/24/solid";
 import { jobdataType } from "./JobListings";
+import { UserDataType } from "./service/fetchProfileInfo";
 
-const RecruiterDashboard = ({ postedJobs, recruiterUser }) => {
+const RecruiterDashboard = ({ postedJobs, recruiterUser }:{postedJobs:jobdataType[],recruiterUser:UserDataType}) => {
   const [currentTabs, setCurrentTabs] = useState("dashboard");
-  const handleTabChange = (value) => {
+  const handleTabChange = (value:string) => {
     setCurrentTabs(value);
   };
+
+  console.log("recruiterUser",recruiterUser)
 
   const recruiterId = recruiterUser.userId;
   const { data: application } = useFetch(

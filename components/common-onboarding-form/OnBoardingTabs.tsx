@@ -12,7 +12,6 @@ import {
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 
-
 export default function OnBoardingTabs() {
   const [currentTab, setCurrentTab] = useState("candidate");
   const [recruiterFormData, setRecruiterFormData] = useState(
@@ -25,7 +24,7 @@ export default function OnBoardingTabs() {
   const currentAuthUser = useUser();
   const { user } = currentAuthUser;
   // get a track of which tab user in
-  const handleTabChange = (value) => {
+  const handleTabChange = (value:string) => {
     setCurrentTab(value);
   };
 

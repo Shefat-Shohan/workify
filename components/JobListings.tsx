@@ -18,7 +18,8 @@ export type jobdataType = {
     description:string;
     contactEmail:string;
     contactPhone:string;
-  }
+  },
+  length:number;
 };
 export default function JobListings() {
   const {

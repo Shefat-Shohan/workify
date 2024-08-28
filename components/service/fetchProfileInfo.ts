@@ -1,10 +1,18 @@
 
-type UserDataType = {
+export type UserDataType = {
   id: string | number;
   recruiterInfo:{
     name: string;
     companyName: string;
     companyRole:string;
+  },
+  candidateInfo:{
+    coverLetter: string;
+    currentCompanyName: string;
+    currentCompanyRole:string;
+    name:string;
+    skills:string;
+    yearsOfExperience:string;
   },
   role: string;
   userId:string;
