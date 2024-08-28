@@ -33,7 +33,7 @@ export const columns: ColumnDef<Candidate>[] = [
     accessorKey: "status",
     header: "Progress",
     cell:( {row} )=>{
-      const progress = row.getValue("status");
+      const progress = row.getValue("status") as string;
       return <div> { progress?.length === 1  ? progress[0] : progress[1] } </div>
     }
   },
@@ -41,7 +41,7 @@ export const columns: ColumnDef<Candidate>[] = [
     accessorKey: "coverLetter",
     header: "Cover Letter",
     cell: ({ row }) => {
-      const data = row.getValue("coverLetter");
+      const data = row.getValue("coverLetter") as string;
       const formatedData = data.slice(0, 30);
       return <div> {formatedData}...</div>;
     },

@@ -8,6 +8,7 @@ import Link from "next/link";
 import { DataTable } from "../app/dashboard/Data-Table";
 import { columns } from "@/app/dashboard/columns";
 import { BriefcaseIcon,EnvelopeIcon, UserPlusIcon, UserMinusIcon } from "@heroicons/react/24/solid";
+import { jobdataType } from "./JobListings";
 
 const RecruiterDashboard = ({ postedJobs, recruiterUser }) => {
   const [currentTabs, setCurrentTabs] = useState("dashboard");
@@ -92,7 +93,7 @@ const RecruiterDashboard = ({ postedJobs, recruiterUser }) => {
                 <ScrollArea className="h-72">
                   <div>
                     <div>
-                      {postedJobs.map((job) => (
+                      {postedJobs.map((job:jobdataType) => (
                         <div key={job.id} className="pb-4">
                           <div className="flex justify-between items-center">
                             <div>
