@@ -2,15 +2,12 @@
 import Link from "next/link";
 import { MapPinIcon } from "@heroicons/react/24/solid";
 import { ChevronDoubleRightIcon } from "@heroicons/react/24/solid";
-import CurrentApplicantButton from "./CurrentApplicantButton";
 import {jobdataType} from "../components/JobListings";
 
 export default function JobListing({
   job,
-  recruiterUser,
 }: {
   job: jobdataType;
-  recruiterUser?: boolean;
 }) {
   
   let description = job.description;

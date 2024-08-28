@@ -30,9 +30,13 @@ const CandidateActivity: React.FC<CandidateActivityProps> = ({
   const { data: applicants } = useFetch(
     "https://66afff066a693a95b537a511.mockapi.io/application/"
   );
-  const { data: jobList } = useFetch(
+  const { data } = useFetch(
     "https://66afff066a693a95b537a511.mockapi.io/jobs"
   );
+
+
+  const jobList = data as jobdataType[] | undefined;
+
   const jobAppliedByCurrentuser = applicants.filter(
     (applicant: Applicant) => applicant?.candidateUserId == currentuserId
   );
@@ -72,7 +76,7 @@ const CandidateActivity: React.FC<CandidateActivityProps> = ({
                         application.status.includes(targetStatus)
                       )
                       .map((application: Applicant) =>
-                        jobList.find(
+                        jobList?.find(
                           (appliedJobs: jobdataType) =>
                             appliedJobs.id == application.jobId
                         )
