@@ -105,11 +105,11 @@ const ApplyJob = ({ id }: { id: string | number }) => {
               <div className="md:col-span-1 col-span-3 border-t md:border-t-0 mt-6 justify-center md:pl-6 pl-0place-content-center">
                 <div className="pt-6">
                   <p className="text-base text-gray-400 pb-2 font-light">
-                    Salary Range:
+                    Salary Range: &nbsp;
                     <span className="font-normal">{jobList.salary}</span>
                   </p>
                   <p className="text-base text-gray-400 pb-2 font-light">
-                    Salary Range:
+                    Salary Range:&nbsp; 
                     <span className="font-normal">{jobList.location}</span>
                   </p>
                 </div>
