@@ -226,7 +226,7 @@ export default function JobDetail({ job }: { job: jobdataType }) {
                       Email Us:
                     </h4>
                     <span className="text-[14px] text-gray-400 font-light">
-                      job.company.contactEmail
+                      {job.company.contactEmail}
                     </span>
                   </div>
                   <div className="my-4">
@@ -234,7 +234,7 @@ export default function JobDetail({ job }: { job: jobdataType }) {
                       Call Us:
                     </h4>
                     <span className="text-[14px] text-[#f1f7feb5] font-light">
-                      job.company.contactPhone
+                      {job.company.contactPhone}
                     </span>
                   </div>
                 </div>
