@@ -28,7 +28,7 @@ interface OnboardingProps<T> {
   formControls: FormControl[];
   formData: T;
   buttonText: string;
-  btnType: 'submit' | 'button' | 'reset';
+  btnType?: 'submit' | 'button' | 'reset';
   isBtnDisabled: boolean;
   setFormData: React.Dispatch<React.SetStateAction<T>>; 
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
@@ -118,7 +118,7 @@ const OnboardingForm =<T extends FormDataType1 | FormDataType2> ({
       <div>
         <Button
           className={`disabled:opacity-60 flex h-12 text-base items-center justify-center px-4  mt-6 mb-6 bg-slate-800 hover:bg-slate-800 text-white-100 hover:brightness-125 transition-all`}
-          type={btnType || "Submit"}
+          type={btnType || "submit"}
           disabled={isBtnDisabled}
         >
           {buttonText}

@@ -50,8 +50,8 @@ export default function OnBoardingTabs() {
     );
   };
   // push recruiter form info to database
-  const onRecruiterOnboardSubmit = async (e: FormDataEvent) => {
-    e.preventDefault();
+  const onRecruiterOnboardSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     const profileData = {
       recruiterInfo: recruiterFormData,
       role: "recruiter",
@@ -71,8 +71,8 @@ export default function OnBoardingTabs() {
     }
   };
   // push candidate form info to database
-  const onCandidateOnboardSubmit = async (e: FormDataEvent) => {
-    e.preventDefault();
+  const onCandidateOnboardSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     const profileData = {
       candidateInfo: candidateFormData,
       role: "candidate",
@@ -134,6 +134,7 @@ export default function OnBoardingTabs() {
             setFormData={setRecruiterFormData}
             isBtnDisabled={!recruiterFormValidation()}
             onSubmit={onRecruiterOnboardSubmit}
+            
           />
         </TabsContent>
       </Tabs>
