@@ -17,8 +17,6 @@ const RecruiterDashboard = ({ postedJobs, recruiterUser }:{postedJobs:jobdataTyp
     setCurrentTabs(value);
   };
 
-  console.log("recruiterUser",recruiterUser)
-
   const recruiterId = recruiterUser.userId;
   const { data: application } = useFetch(
     `https://66afff066a693a95b537a511.mockapi.io/application?recruiterId=${recruiterId}`

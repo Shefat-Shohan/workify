@@ -3,20 +3,24 @@ import { cn } from "@/lib/utils";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
+import { jobdataType } from "../JobListings";
 
-export default function SearchBar({ setResults }) {
+interface SearchBarProps {
+  setResults: React.Dispatch<React.SetStateAction<jobdataType[]>>
+}
+export default function SearchBar({ setResults }:SearchBarProps) {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const router = useRouter();
   // get the searchterm filter the data the set the setResult value
 
-  const fetchData = (value) => {
+  const fetchData = (value:string) => {
     fetch("https://66afff066a693a95b537a511.mockapi.io/jobs")
       .then((res) => res.json())
       .then((data) => {
         if (value === "") {
           setResults([]);
         } else {
-          const result = data.filter((job) => {
+          const result = data.filter((job:jobdataType) => {
             return (
               job &&
               job.title &&
@@ -34,7 +38,7 @@ export default function SearchBar({ setResults }) {
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchTerm(value);
     fetchData(value);
