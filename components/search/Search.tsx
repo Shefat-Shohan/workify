@@ -5,7 +5,7 @@ import SearchResultList from "./SearchResultList";
 import { jobdataType } from "../JobListings";
 
 export default function Search() {
-  const [results, setResults] = useState<React.SetStateAction<jobdataType[]>>(
+  const [results, setResults] = useState<jobdataType[]>(
     []
   );
   return (
