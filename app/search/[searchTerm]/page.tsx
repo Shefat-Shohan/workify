@@ -46,7 +46,7 @@ export default function JobSearchFeed() {
                   {decodedUriTerm}
                 </span>
               </h1>
-              <p className="">{searchResult.length}&nbsp;result found</p>
+              <p className="text-base text-gray-400">{searchResult.length}&nbsp;result found</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {searchResult.map((filteredJob) => (
