@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {motion} from "framer-motion";
-export default function CompnayDetailsForm({ formData, setFormData }) {
+import { JobFormDetailsProps } from "./JobSalaryForm";
+export default function CompnayDetailsForm({ formData, setFormData }:JobFormDetailsProps) {
   return (
     <div className="w-full sm:px-16 px-5 ">
       <motion.div 

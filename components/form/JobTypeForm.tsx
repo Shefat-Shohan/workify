@@ -1,6 +1,7 @@
 import { jobTypes } from "@/data";
+import { JobFormDetailsProps } from "./JobSalaryForm";
 
-export default function JobTypeForm({ formData, setFormData }) {
+export default function JobTypeForm({ formData, setFormData }:JobFormDetailsProps) {
   const handleClick = (jobType:string) => {
     setFormData({
       ...formData,

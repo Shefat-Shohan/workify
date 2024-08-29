@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-export default function JobDetailsForm({ formData, setFormData }) {
+import { JobFormDetailsProps } from "./JobSalaryForm";
+export default function JobDetailsForm({ formData, setFormData }:JobFormDetailsProps) {
   console.log(formData);
   return (
     <div className="w-full sm:px-16 px-5">

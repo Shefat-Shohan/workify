@@ -34,7 +34,7 @@ interface FormData {
     email: string;
     userId: string,
     status: string;
-  }
+  }[];
 }
 
 export default function Form({userId}:{userId: string | undefined}) {
@@ -56,7 +56,7 @@ export default function Form({userId}:{userId: string | undefined}) {
     contactPhone: "",
   });
 
-  const onSubmit = async (formData: FormData) => {
+  const onSubmit = async (formData:any) => {
     const newJobs = {
       title: formData.title,
       type: formData.type,
@@ -64,7 +64,7 @@ export default function Form({userId}:{userId: string | undefined}) {
       description: formData.description,
       salary: formData.salary,
       recruiterId: userId,
-      applicants: [],
+      applicants: formData.applicants,
       company: {
         name: formData.companyName,
         description: formData.companyDescription,

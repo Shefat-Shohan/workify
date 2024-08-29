@@ -3,12 +3,34 @@ import { useState } from "react";
 import { ChevronUpDownIcon } from "@heroicons/react/24/solid";
 import { salarys } from "@/data";
 
+export interface FormData {
+  type: string;
+  title: string;
+  description: string;
+  salary: string;
+  LocationFlag: string;
+  CountryLocation: string;
+  StateLocation: string;
+  companyName: string;
+  companyDescription: string;
+  contactEmail: string;
+  contactPhone: string;
+}
 
-export default function JobSalaryForm({formData, setFormData}) {
+export interface JobFormDetailsProps {
+  formData: FormData;
+  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
+}
+type Salary={
+  title: string;
+    id: number;
+}
+
+export default function JobSalaryForm({formData, setFormData}:JobFormDetailsProps) {
   const [isOpen, setIsOpen] = useState(false);
   const toggleOpen = () => setIsOpen(!isOpen);
 
-  const handleSelect = ({salary}) => {
+  const handleSelect = ({salary}:{salary:Salary}) => {
     setFormData({...formData, salary: salary.title})
     setIsOpen(false);
   };

@@ -2,34 +2,41 @@
 
 import Select from "react-select";
 import useCountries from "../service/useCountry";
-import { useState } from "react";
 import { motion } from "framer-motion";
-const customStyles = {
-  control: (provided, state) => ({
+import { FormData } from "./JobSalaryForm";
+import { StylesConfig, GroupBase, ControlProps, MenuProps, InputProps, OptionProps } from "react-select";
+import { CSSObject } from "@emotion/react";
+
+interface OptionType {
+  label: string;
+  value: string;
+}
+
+const customStyles: StylesConfig<OptionType, false, GroupBase<OptionType>> = {
+  control: (provided: CSSObject, state: ControlProps<OptionType, false, GroupBase<OptionType>>) => ({
     ...provided,
     backgroundColor: "rgba(17, 25, 40, 0.75)",
-    fontsize: "18px",
+    fontSize: "18px",
     border: "transparent",
   }),
-  menu: (provided, state) => ({
+  menu: (provided: CSSObject, state: MenuProps<OptionType, false, GroupBase<OptionType>>) => ({
     ...provided,
     backgroundColor: "rgba(17, 25, 40, 0.75)",
   }),
-  input: (provided, state) => ({
+  input: (provided: CSSObject, state: InputProps<OptionType, false, GroupBase<OptionType>>) => ({
     ...provided,
-
     color: "rgba(17, 25, 40, 0.75)",
     fontSize: "16px",
     padding: "8px",
   }),
-  option: (provided, state) => ({
+  option: (provided: CSSObject, state: OptionProps<OptionType, false, GroupBase<OptionType>>) => ({
     ...provided,
     backgroundColor: state.isSelected
       ? "purple"
       : state.isFocused
       ? "rgba(255, 255, 255, 0.125)"
       : "rgba(17, 25, 40, 0.75)",
-    color: state.isSelected ? "white" : "white",
+    color: "white",
   }),
 };
 
@@ -44,6 +51,7 @@ export type CountrySelectValue = {
 interface countrySelectProps {
   value?: CountrySelectValue;
   onChange: (value: CountrySelectValue) => void;
+  formData: FormData
 }
 
 const SelectLocation: React.FC<countrySelectProps> = ({
