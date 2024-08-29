@@ -87,8 +87,8 @@ const RecruiterDashboard = ({ postedJobs, recruiterUser }:{postedJobs:jobdataTyp
               <div className="border rounded-lg px-6 py-6 lg:w-[40%]">
                 <div className="pb-6 border-b mb-6">
                   <h2 className="text-xl text-white-200">Recent posted jobs</h2>
-                  <p className="text-base text-gray-400">
-                    You have posted {postedJobs.length} job
+                  <p className="text-sm text-gray-400">
+                    You have posted <span className="text-purple">{postedJobs.length}</span> job
                   </p>
                 </div>
                 <ScrollArea className="h-72">
@@ -99,10 +99,10 @@ const RecruiterDashboard = ({ postedJobs, recruiterUser }:{postedJobs:jobdataTyp
                           <div className="flex justify-between items-center">
                             <div>
                               <h2 className="md:text-base text-base text-white-200">
-                                {job.title}
+                                {job.title.slice(0, 25)}
                               </h2>
                               <p className="text-gray-400 text-sm">
-                                {job.description.slice(0, 30)}
+                                {job.description.slice(0, 35)}
                               </p>
                             </div>
                             <Link

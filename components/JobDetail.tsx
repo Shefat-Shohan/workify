@@ -29,7 +29,7 @@ export default function JobDetail({ job }: { job: jobdataType }) {
   // share url
   const router = useRouter();
   const handleJobShare = () => {
-    const url = `http://localhost:3000${pathName}`;
+    const url = `https://workify-nu.vercel.app/${pathName}`;
     navigator.clipboard
       .writeText(url)
       .then(() => {
