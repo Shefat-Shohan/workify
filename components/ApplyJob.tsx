@@ -69,6 +69,7 @@ const ApplyJob = ({ id }: { id: string | number }) => {
       description: "Check activitty to exprole.",
     });
     router.push("/activity");
+    router.refresh();
   };
 
   return (

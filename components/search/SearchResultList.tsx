@@ -7,7 +7,6 @@ export default function SearchResultList({
 }: {
   results: jobdataType[];
 }) {
-  console.log("results", results);
   return (
     <div>
       <div className="relative">

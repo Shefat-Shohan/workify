@@ -9,8 +9,13 @@ import { motion } from "framer-motion";
 import JobSalaryForm from "./JobSalaryForm";
 import { pageTitle } from "@/data";
 import { useRouter } from "next/navigation";
-import { useToast } from "@/components/ui/use-toast"
-
+import { useToast } from "@/components/ui/use-toast";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface FormData {
   title: string;
@@ -30,18 +35,18 @@ interface FormData {
     contactPhone: string;
   };
   applicants: {
-    name:string;
+    name: string;
     email: string;
-    userId: string,
+    userId: string;
     status: string;
   }[];
 }
 
-export default function Form({userId}:{userId: string | undefined}) {
+export default function Form({ userId }: { userId: string | undefined }) {
   const [step, setStep] = useState(0);
   const router = useRouter();
-  const {toast} = useToast();
-  
+  const { toast } = useToast();
+
   const [formData, setFormData] = useState({
     type: "",
     title: "",
@@ -56,7 +61,7 @@ export default function Form({userId}:{userId: string | undefined}) {
     contactPhone: "",
   });
 
-  const onSubmit = async (formData:any) => {
+  const onSubmit = async (formData: any) => {
     const newJobs = {
       title: formData.title,
       type: formData.type,
@@ -82,8 +87,7 @@ export default function Form({userId}:{userId: string | undefined}) {
     toast({
       title: "Job Posted Successfully",
       description: "Check dashboard to exprole.",
-    })
-
+    });
   };
 
   const displaySteps = () => {
@@ -112,6 +116,19 @@ export default function Form({userId}:{userId: string | undefined}) {
     if (step === 4) return "75%";
     else return "100%";
   };
+
+  const isDisabled =
+    (step === 1 && !formData.type) ||
+    (step === 2 && !(formData.title && formData.description)) ||
+    (step === 3 && !formData.salary) ||
+    (step === 4 && !formData.CountryLocation) ||
+    (step === 5 &&
+      !(
+        formData.companyName &&
+        formData.companyDescription &&
+        formData.contactEmail &&
+        formData.contactPhone
+      ));
 
   return (
     <div className="relative flex justify-center items-center flex-col overflow-hidden mx-auto">
@@ -146,35 +163,54 @@ export default function Form({userId}:{userId: string | undefined}) {
                   Back
                 </button>
               )}
-              <button
-                disabled={
-                  (step === 1 && !formData.type) ||
-                  (step === 2 && !(formData.title && formData.description)) ||
-                  (step === 3 && !formData.salary) ||
-                  (step === 4 && !formData.CountryLocation) ||
-                  (step === 5 &&
-                    !(
-                      formData.companyName &&
-                      formData.companyDescription &&
-                      formData.contactEmail &&
-                      formData.contactPhone
-                    ))
-                }
-                onClick={() => {
-                  if (step === pageTitle.length - 1) {
-                    onSubmit(formData);
-                  } else {
-                    setStep((currPage) => currPage + 1);
-                  }
-                }}
-                className="bg-black-200 hover:bg-black-300 px-8 py-3 rounded text-lg text-white-200"
-              >
-                {step === 0
-                  ? "Get Started"
-                  : step === pageTitle.length - 1
-                  ? "Submit"
-                  : "Next"}
-              </button>
+              <TooltipProvider>
+                {isDisabled ? (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button
+                        disabled={isDisabled}
+                        onClick={() => {
+                          if (step === pageTitle.length - 1) {
+                            onSubmit(formData);
+                          } else {
+                            setStep((currPage) => currPage + 1);
+                          }
+                        }}
+                        className="bg-black-200 hover:bg-black-300 px-8 py-3 rounded text-lg text-white-200"
+                      >
+                        {step === 1
+                          ? "Next"
+                          : step === pageTitle.length - 1
+                          ? "Submit"
+                          : "Next"}
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p className="text-gray-400">
+                        Please provide the necessary information
+                      </p>
+                    </TooltipContent>
+                  </Tooltip>
+                ) : (
+                  <button
+                    disabled={isDisabled}
+                    onClick={() => {
+                      if (step === pageTitle.length - 1) {
+                        onSubmit(formData);
+                      } else {
+                        setStep((currPage) => currPage + 1);
+                      }
+                    }}
+                    className="bg-black-200 hover:bg-black-300 px-8 py-3 rounded text-lg text-white-200"
+                  >
+                    {step === 0
+                      ? "Get Started"
+                      : step === pageTitle.length - 1
+                      ? "Submit"
+                      : "Next"}
+                  </button>
+                )}
+              </TooltipProvider>
             </div>
           </div>
         </div>

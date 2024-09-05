@@ -93,6 +93,7 @@ const handleApplicationSelected = async (getCurrentStatus:string) => {
     }
   );
   router.back();
+  router.refresh();
   toast({
     title: `Candidate ${getCurrentStatus}.`,
   })

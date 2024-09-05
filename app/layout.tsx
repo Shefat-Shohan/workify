@@ -25,22 +25,22 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html lang="en" className="h-full">
         <head>
           <link rel="icon" href="/fabicon.ico" />
         </head>
-        <body className={`${roboto.className} antialiased bg-black-100`}>
-          <main>
-            <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-              <Navbar />
-              {children}
-              <Toaster />
-            </ThemeProvider>
+        <body
+          className={`${roboto.className} antialiased bg-black-100 min-h-full flex flex-col overflow-x-hidden`}
+        >
+          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+            <Navbar />
+            {children}
+            <Toaster />
             <div>
               {modal}
               <div id="modal-root" />
             </div>
-          </main>
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>

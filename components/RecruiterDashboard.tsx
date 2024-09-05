@@ -88,7 +88,7 @@ const RecruiterDashboard = ({ postedJobs, recruiterUser }:{postedJobs:jobdataTyp
                 <div className="pb-6 border-b mb-6">
                   <h2 className="text-xl text-white-200">Recent posted jobs</h2>
                   <p className="text-sm text-gray-400">
-                    You have posted <span className="text-purple">{postedJobs.length}</span> job
+                    You have posted {postedJobs.length} job
                   </p>
                 </div>
                 <ScrollArea className="h-72">

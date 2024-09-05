@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <footer className="bg-[url('/footer-grid.svg')] bg-cover bg-center w-full pt-20 pb-10" id="contact">
+    <footer className="bg-[url('/footer-grid.svg')] bg-cover bg-center w-full pt-10 pb-10 max-w-7xl mx-auto sm:px-10 px-5" id="contact">
       <div className="flex flex-col items-center">
         <h1 className="heading lg:max-w-[45vw]">
         Post Your Job<span className="text-purple"> Opportunity Today</span>

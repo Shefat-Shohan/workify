@@ -19,10 +19,14 @@ type UserType = {
   userId: string;
   role: string;
 };
-export default function JobDetail({ job }: { job: jobdataType }) {
+export default function JobDetail({
+  job,
+  recruiter,
+}: {
+  job: jobdataType;
+  recruiter: boolean;
+}) {
   const pathName = usePathname();
-  const [isLoading, setIsLoading] = useState(true);
-  const [isRecruiter, setIsRecruiter] = useState(false);
   const { user } = useUser();
   const { toast } = useToast();
   const recruiterUserId = user?.id;
@@ -59,7 +63,6 @@ export default function JobDetail({ job }: { job: jobdataType }) {
     "https://66bf797c42533c4031464979.mockapi.io/workify/users"
   );
 
-
   // handle delete function
   const handleDelete = async (deleteId: string) => {
     const isConfirm = window.confirm(
@@ -88,7 +91,7 @@ export default function JobDetail({ job }: { job: jobdataType }) {
 
           // Find and delete applications related to the deleted job
           const applicationsToDelete = applications.filter(
-            (item:Applicant) => item.jobId === deleteId
+            (item: Applicant) => item.jobId === deleteId
           );
 
           for (const app of applicationsToDelete) {
@@ -107,6 +110,7 @@ export default function JobDetail({ job }: { job: jobdataType }) {
           }
 
           // Navigate back after everything is successfully deleted
+          router.refresh();
           router.back();
         } else {
           throw new Error("Failed to delete job");
@@ -133,17 +137,17 @@ export default function JobDetail({ job }: { job: jobdataType }) {
       : false;
   // is current user is recruiter
 
-  useEffect(() => {
-    const recruiter =
-      users.findIndex(
-        (user: UserType) =>
-          user.userId === recruiterUserId && user.role === "recruiter"
-      ) > -1
-        ? true
-        : false;
-    setIsRecruiter(recruiter);
-    setIsLoading(false);
-  }, [users, recruiterUserId]);
+  // useEffect(() => {
+  //   const recruiter =
+  //     users.findIndex(
+  //       (user: UserType) =>
+  //         user.userId === recruiterUserId && user.role === "recruiter"
+  //     ) > -1
+  //       ? true
+  //       : false;
+  //   setIsRecruiter(recruiter);
+  //   setIsLoading(false);
+  // }, [users, recruiterUserId]);
   // if currentUser included into the currentJob id then we show the delete button else empty div, else a apply button.
 
   const showActionButton =
@@ -163,16 +167,17 @@ export default function JobDetail({ job }: { job: jobdataType }) {
               </h1>
               <div className="flex items-center justify-center gap-3 mt-3 md:mt-0">
                 {showActionButton ? (
-                  <DeleteJob handleDelete={() => handleDelete(job?.id as string)} />
-                ) : isRecruiter ? (
+                  <DeleteJob
+                    handleDelete={() => handleDelete(job?.id as string)}
+                  />
+                ) : recruiter ? (
                   <div></div>
                 ) : (
-                  <Link href={`/jobs/${job.id}/apply`}>
-                    <ApplyJobButton
-                      disabled={isApplied}
-                    />
+                  <Link href={`/jobs/${job?.id}/apply`}>
+                    <ApplyJobButton disabled={isApplied} />
                   </Link>
                 )}
+
                 <Link href="#">
                   <Button className="px-4 py-6 bg-background border hover:bg-black-200">
                     <ShareIcon
@@ -245,18 +250,10 @@ export default function JobDetail({ job }: { job: jobdataType }) {
           {/* right side content */}
           <div className="lg:pl-8 pl-0 col-span-4 lg:col-span-1">
             <h2 className="text-2xl font-normal mb-8 text-white-100">
-              {isLoading ? (
-                <div>Loading...</div>
-              ) : isRecruiter ? (
-                "Posted by you"
-              ) : (
-                "Recent jobs"
-              )}
+              {recruiter ? "Posted by you" : "Recent jobs"}
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6 ">
-              {isLoading ? (
-                <div>Loading...</div>
-              ) : isRecruiter ? (
+            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6">
+              {recruiter ? (
                 <RecruiterJobList currentJobId={currentJobId} />
               ) : (
                 jobs.map((job: jobdataType) => (

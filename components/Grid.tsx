@@ -1,15 +1,14 @@
-import Image from "next/image";
-import { div } from "three/examples/jsm/nodes/Nodes.js";
 import { BackgroundGradientAnimation } from "./ui/GradientBg";
 import { GlobeDemo } from "./ui/GridGlobe";
 import Link from "next/link";
 import MagicButton from "./ui/MagicButton";
 import { FaLocationArrow } from "react-icons/fa";
+import Image from "next/image";
 
 export default function Grid() {
   return (
-    <div id="features">
-      <div className="grid gap-6 md:grid-cols-6 md:grid-rows-4 h-[90vh] relative mb-80 md:mb-0">
+    <section className="mb-10" id="features">
+      <div className="grid gap-6 md:grid-cols-6 md:grid-rows-4 h-[100vh] relative mb-80 md:mb-0">
         {/* grid 1 */}
         <div className="md:col-span-4 md:row-span-2 flex items-end md:p-10 p-6 pt-20 md:pt-0 rounded-lg bg-[url('/b1.svg')] bg-cover border border-gray-50\90">
           <h2 className="font-sans font-bold text-lg lg:text-2xl max-w-96 pt-20 hover:translate-x-1 transition text-white-100">
@@ -27,7 +26,7 @@ export default function Grid() {
         {/* grid 3 */}
         <div className="py-20 md:py-0 md:col-span-2 bg-[#04071D] flex justify-between rounded-lg items-center border border-gray-50/15 overflow-hidden relative">
           <div className="p-10 md:p-6 hover:translate-x-1 transition z-10">
-            <p className="md:tracking-wider text-sm md:text-xs text-gray-400">
+            <p className="md:tracking-wider text-sm md:text-xs text-gray-400 leading-10">
               Matching Career Paths
             </p>
             <h2 className="font-sans font-bold text-lg lg:text-2xl max-w-96 text-white-100">
@@ -39,7 +38,7 @@ export default function Grid() {
               {["react.js", "Next.js", "node.js"].map((item) => (
                 <span
                   key={item}
-                  className="py-3 lg:py-3 lg:px-6 px-8 text-xs lg:text-sm opacity-50 lg:opacity-100 rounded-md text-center bg-[#10132e]"
+                  className="py-3 lg:py-3 lg:px-6 px-8 text-xs lg:text-sm opacity-50 lg:opacity-100 rounded-md text-center bg-[#10132e] text-gray-400"
                 >
                   {item}
                 </span>
@@ -51,7 +50,7 @@ export default function Grid() {
               {["react.js", "Next.js", "node.js"].map((item) => (
                 <span
                   key={item}
-                  className="py-3 lg:py-3 lg:px-6 px-8 text-xs lg:text-sm opacity-50 lg:opacity-100 rounded-md text-center bg-[#10132e]"
+                  className="py-3 lg:py-3 lg:px-6 px-8 text-xs lg:text-sm opacity-50 lg:opacity-100 rounded-md text-center bg-[#10132e] text-gray-400"
                 >
                   {item}
                 </span>
@@ -90,7 +89,7 @@ export default function Grid() {
             <h2 className="font-sans font-bold text-lg lg:text-2xl max-w-96 text-white-100">
               Browse Latest Job Listings
             </h2>
-            <Link href={"#"} className="md:mt-6 mt-6">
+            <Link href={"/job"} className="md:mt-6 mt-6">
               <MagicButton
                 title="Browse Jobs"
                 icon={<FaLocationArrow />}
@@ -100,6 +99,6 @@ export default function Grid() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

@@ -37,10 +37,10 @@ export default function JobListing({
               </div>
               <div className="flex justify-between items-center my-4">
                 <div>
-                <h3 className="text-purple">{job?.salary} / Year</h3>
+                <h3 className="text-purple ">{job?.salary} / Year</h3>
                 </div>
                 <Link
-                  className="flex justify-center items-center gap-1 text-gray-400 "
+                  className="flex justify-center items-center gap-1 text-gray-400"
                   href={`/jobs/${job?.id}`}
                 >
                   Read more

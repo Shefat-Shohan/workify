@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import Search from "./search/Search";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { Bars3BottomRightIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
@@ -19,11 +18,15 @@ export default function NavMenu({ profileInfo }: {profileInfo:UserDataType[] | u
       show: true,
     },
     {
+      title: "Jobs",
+      url: "/job",
+      show: true,
+    },
+    {
       title: "Activity",
       url: "/activity",
       show: profileInfo?.[0]?.role === "candidate"
     },
-
     {
       title: "Sign in",
       url: "/sign-in",
@@ -35,10 +38,16 @@ export default function NavMenu({ profileInfo }: {profileInfo:UserDataType[] | u
       show: !user,
     },
     {
+      title: "Post Job",
+      url: "/post-job",
+      show: profileInfo?.[0]?.role === "recruiter"
+    },
+    {
       title: "Dashboard",
       url: "/dashboard",
       show: profileInfo?.[0]?.role === "recruiter"
     },
+
   ];
   const [isOpen, setIsOpen] = useState(false);
   // const useNoScroll = (isOpen) => {
@@ -105,7 +114,7 @@ export default function NavMenu({ profileInfo }: {profileInfo:UserDataType[] | u
                       </Link>
                     ) : null
                   )}
-                  <span className={`${user ? "pl-6" : "pl-0"}`}>
+                  <span className={`${user ? "md:pl-6" : "pl-0"}`}>
                   <UserButton afterSwitchSessionUrl="/" />
                   </span>
                 </nav>

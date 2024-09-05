@@ -1,3 +1,6 @@
+import { FilterParams } from "@/components/AllJobs";
+import { url } from "inspector";
+import qs from "query-string";
 export const navItems = [
   { name: "About", link: "#about" },
   { name: "Projects", link: "#projects" },
@@ -138,8 +141,8 @@ export const testimonials = [
   {
     quote:
       "I appreciated the variety of job postings available on this platform. It felt like there were new opportunities every day, which kept me motivated throughout my job search. The application tracking feature is a game-changer, allowing me to keep tabs on all my applications in one place. I also found the resume builder tool extremely helpful in updating my CV to industry standards. Thanks to this app, I managed to secure a position that perfectly aligns with my career goals. Excellent resource for job seekers!",
-      name: "Davis Miller",
-      title: "Marketing Manager",
+    name: "Davis Miller",
+    title: "Marketing Manager",
   },
   {
     quote:
@@ -328,7 +331,41 @@ export const initialCandidateFormData = {
   name: "",
   currentCompanyName: "",
   currentCompanyRole: "",
-  yearsOfExperience:"",
+  yearsOfExperience: "",
   skills: "",
-  coverLetter:"",
+  coverLetter: "",
 };
+
+export const JobFilterMenus = [
+  {
+    id: "title",
+    label: "Title",
+  },
+  {
+    id: "type",
+    label: "Type",
+  },
+  {
+    id: "location",
+    label: "Location",
+  },
+];
+
+export function fromUrlQuery({ params, dataToAdd }:{params:string, dataToAdd:FilterParams}) {
+  let currentUrl = qs.parse(params);
+  if (Object.keys(dataToAdd).length > 0) {
+    Object.keys(dataToAdd).map((key) => {
+      if (dataToAdd[key].length === 0) delete currentUrl[key];
+      else currentUrl[key] = dataToAdd[key].join(",");
+    });
+  }
+  return qs.stringifyUrl(
+    {
+      url: window.location.pathname,
+      query: currentUrl,
+    },
+    {
+      skipNull: true,
+    }
+  );
+}
