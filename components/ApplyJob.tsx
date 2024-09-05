@@ -48,9 +48,9 @@ const ApplyJob = ({ id }: { id: string | number }) => {
     // get all the application data
     const getApplicantInfo = {
       recruiterId: currentJobDetails.recruiterId,
-      name: candidateProfileDetails.candidateInfo.name,
-      email: candidateProfileDetails.email,
-      candidateUserId: candidateProfileDetails.userId,
+      name: candidateProfileDetails?.candidateInfo.name,
+      email: candidateProfileDetails?.email,
+      candidateUserId: candidateProfileDetails?.userId,
       coverLetter: applyData.coverLetter,
       expectedSalary: applyData.salary,
       status: ["Applied"],
